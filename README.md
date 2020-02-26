@@ -1,2 +1,2 @@
 # vue-video-control-bar
-a simple vide control bar
+a simple vide control bar for vue2

@@ -1,0 +1,35 @@
+{
+  "name": "@joyfulljs/vue-video-control-bar",
+  "version": "1.0.0",
+  "description": "a simple vide control bar",
+  "main": "index.js",
+  "scripts": {
+    "build": "vue-cli-service build --target lib --name VideoControlBar index.vue",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joyfulljs/vue-video-control-bar.git"
+  },
+  "keywords": [
+    "video",
+    "control",
+    "bar",
+    "vue"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "elvin zhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joyfulljs/vue-video-control-bar/issues"
+  },
+  "homepage": "https://github.com/joyfulljs/vue-video-control-bar#readme",
+  "peerDependencies": {
+    "vue": "^2.6.11"
+  },
+  "dependencies": {
+    "@joyfulljs/draggable": "^1.0.1"
+  }
+}
