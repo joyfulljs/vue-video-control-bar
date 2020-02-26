@@ -3,7 +3,7 @@ a simple vide control bar for vue
 
 # appearance
 
-![ui simple](/demo/assets/simple.png "ui simple")
+<img src="./demo/assets/simple.png" alt="drawing" width="300"/>
 
 # warn
 The exported code stays a single file component, make sure to include this in your build process.
