@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VideoControlBar demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- <script src="https://unpkg.com/vue"></script> -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    video {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background-color: #243c70;
+      object-fit: contain
+    }
+
+    video::-webkit-media-controls-fullscreen-button {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <video ref="video" src="./mov_bbb.mp4" autoplay preload disablePictureInPicture
+      controlslist="nodownload nofullscreen" playsinline webkit-playsinline x5-video-player-type="h5"></video>
+    <video-control-bar v-if="video" :video="video"></video-control-bar>
+  </div>
+  <script src="./index.js"></script>
+  <script>
+    new Vue({
+      data() {
+        return {
+          video: null
+        }
+      },
+      mounted() {
+        this.video = this.$refs.video;
+      }
+    }).$mount('#app')
+  </script>
+</body>
+
+</html>

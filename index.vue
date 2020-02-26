@@ -1,9 +1,12 @@
 <template>
   <div class="video-control-bar">
-    <div ref="playControl" :class="{'play-control':true, playing:paused, paused: !paused}"></div>
+    <div
+      :class="{'play-control':true, playing:paused, paused: !paused}"
+      @click="handleClickPlayControl"
+    ></div>
     <div ref="current" class="current-time">{{currentTime}}</div>
     <div ref="progress" class="progress" @click="handleJumpProgress">
-      <i ref="slider" :style="{width: progress*100 + '%'}"></i>
+      <i :style="{width: progress*100 + '%'}"></i>
     </div>
     <div class="duration-time">{{totalTime}}</div>
   </div>
@@ -15,7 +18,8 @@ export default {
   name: "video-control-bar",
   props: {
     video: {
-      type: HTMLVideoElement
+      type: HTMLVideoElement,
+      required: true
     }
   },
   data() {
@@ -23,7 +27,8 @@ export default {
       paused: true,
       currentTime: "00:00",
       totalTime: "00:00",
-      progress: 0
+      progress: 0,
+      dragged: false
     };
   },
   methods: {
@@ -34,15 +39,16 @@ export default {
     handleClickPlayControl
   },
   mounted() {
-    this.draggable = Draggable(this.$refs.progress, this.handleDragProgress);
+    this.draggable = Draggable(this.$refs.progress, {
+      onStart: () => {
+        this.dragged = false;
+      },
+      onMoving: this.handleDragProgress
+    });
     this.video.addEventListener("durationchange", this.handleDurationChange);
     this.video.addEventListener("timeupdate", this.handleTimeUpdate);
     this.video.addEventListener("play", e => (this.paused = false));
     this.video.addEventListener("pause", e => (this.paused = true));
-    this.$refs.playControl.addEventListener(
-      "click",
-      this.handleClickPlayControl
-    );
   },
   destroyed() {
     this.draggable.destroy();
@@ -60,26 +66,28 @@ function handleClickPlayControl(e) {
 function handleTimeUpdate(e) {
   this.currentTime = formatTime(e.target.currentTime);
   this.progress = e.target.currentTime / e.target.duration;
-  this.paused = false;
 }
 
 function handleDurationChange(e) {
   this.totalTime = formatTime(e.target.duration);
 }
 
-function handleDragProgress(delt) {
-  const { progress, slider } = this.$refs;
-  let w = slider.offsetWidth + delt;
-  if (w > progress.offsetWidth) {
-    w = progress.offsetWidth;
+function handleDragProgress(e) {
+  const { progress } = this.$refs;
+  let w = this.progress + e.deltX / progress.offsetWidth;
+  if (w > 1) {
+    w = 1;
   } else if (w < 0) {
     w = 0;
   }
-  this.progress = w / progress.offsetWidth;
+  this.progress = w;
   this.video.currentTime = this.progress * this.video.duration;
+  this.dragged = true;
+  return false;
 }
 
 function handleJumpProgress(e) {
+  if (this.dragged) return;
   const target = e.currentTarget;
   const rect = target.getBoundingClientRect();
   const clickX = e.clientX - rect.left;
@@ -99,6 +107,10 @@ function formatNumber(num) {
 </script>
 
 <style lang="less">
+.video-control-bar,
+.video-control-bar * {
+  box-sizing: border-box;
+}
 .video-control-bar {
   position: absolute;
   display: flex;

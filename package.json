@@ -2,9 +2,9 @@
   "name": "@joyfulljs/vue-video-control-bar",
   "version": "1.0.0",
   "description": "a simple vide control bar",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name VideoControlBar index.vue",
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +30,12 @@
     "vue": "^2.6.11"
   },
   "dependencies": {
-    "@joyfulljs/draggable": "^1.0.1"
+    "@joyfulljs/draggable": "^1.0.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "rollup": "^1.31.1",
+    "rollup-plugin-vue": "^5.1.6",
+    "vue-template-compiler": "^2.6.11"
   }
 }
