@@ -1,6 +1,6 @@
 {
   "name": "@joyfulljs/vue-video-control-bar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a simple vide control bar",
   "main": "./index.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "vue"
   ],
   "files": [
-    "dist"
+    "index.js",
+    "index.vue"
   ],
   "author": "elvin zhu",
   "license": "MIT",
